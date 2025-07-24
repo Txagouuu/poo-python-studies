@@ -27,6 +27,7 @@ class Restaurante:
         return self.ativo                                      #retorna o estado atual do restaurante
 
     def receber_avaliacao(self, cliente, nota):
+        nota = min(max(nota, 0), 5)                             # Limita a nota entre 0 e 5
         avaliacao = Avaliacao(cliente, nota)                   #cria um objeto avaliacao com o cliente e a nota
         self._avaliacao.append(avaliacao)                     #adiciona a avaliação à lista de avaliações do restaurante
                                                                 #retorna o objeto avaliacao criado
@@ -34,7 +35,7 @@ class Restaurante:
     @property                                   #método para calcular a média das avaliações e para que seja possivel a leitura do atributo    
     def media_avaliacao(self):
         if not self._avaliacao:                               #verifica se a lista de avaliações está vazia
-            return 0                                          #retorna 0 se não houver avaliações
+            return '-'                                          #retorna 0 se não houver avaliações
         soma_das_notas = sum(Avaliacao._nota for Avaliacao in self._avaliacao)  #soma todas as notas das avaliações
         media = round(soma_das_notas / len(self._avaliacao),1)         #média das notas
         return media                                          #retorna a média das avaliações do restaurante
